@@ -29,13 +29,12 @@ if st.button("🔍 Predict Weather"):
         # Weather Card
         st.markdown(
     f"""
-    <div style="padding:15px;border-radius:10px;
-                background:#f0f2f6;">
-    <h3>{data['city']}, {data['country']}</h3>
-    🌡 Temperature: {data['temperature']} °C <br>
-    💧 Humidity: {data['humidity']} % <br>
-    🌬 Wind Speed: {data['wind_speed']} m/s <br>
-    📊 Pressure: {data['pressure']} hPa
+    <div style="padding:15px;border-radius:10px;background:#f0f2f6;">
+    <h3>{data.get('city', 'N/A')}, {data.get('country', 'N/A')}</h3>
+    🌡 Temperature: {data.get('temperature', 'N/A')} °C <br>
+    💧 Humidity: {data.get('humidity', 'N/A')} % <br>
+    🌬 Wind Speed: {data.get('wind_speed', 'N/A')} m/s <br>
+    📊 Pressure: {data.get('pressure', 'N/A')} hPa
     </div>
     """,
     unsafe_allow_html=True
