@@ -1,19 +1,27 @@
-import plotly.graph_objects as go
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import streamlit as st
 
+def _has_required_weather(data):
+    required = ["temperature", "humidity", "pressure", "wind_speed"]
+    return all(data.get(k) is not None for k in required)
+
 # -----------------------------
-# 1️⃣ Attractive Bar Chart
+# Bar Chart
 # -----------------------------
 def weather_bar_chart(data):
+    if not _has_required_weather(data):
+        st.warning("⚠ Insufficient data for charts")
+        return
+
     df = pd.DataFrame({
         "Parameter": ["Temperature (°C)", "Humidity (%)", "Pressure (hPa)", "Wind Speed (m/s)"],
         "Value": [
-            data["temperature"],
-            data["humidity"],
-            data["pressure"],
-            data["wind_speed"]
+            data.get("temperature"),
+            data.get("humidity"),
+            data.get("pressure"),
+            data.get("wind_speed")
         ]
     })
 
@@ -22,33 +30,33 @@ def weather_bar_chart(data):
         x="Parameter",
         y="Value",
         text="Value",
-        title="🌦 Weather Parameters Overview",
+        title="🌦 Weather Parameters Overview"
     )
-
     fig.update_traces(textposition="outside")
     fig.update_layout(title_x=0.5)
 
     st.plotly_chart(fig, use_container_width=True)
 
-
 # -----------------------------
-# 2️⃣ Radar (Spider) Chart
+# Radar Chart
 # -----------------------------
 def weather_radar_chart(data):
+    if not _has_required_weather(data):
+        return
+
     categories = ["Temperature", "Humidity", "Pressure", "Wind Speed"]
     values = [
-        data["temperature"],
-        data["humidity"],
-        data["pressure"] / 10,   # scaled for visibility
-        data["wind_speed"] * 10  # scaled for visibility
+        data.get("temperature"),
+        data.get("humidity"),
+        data.get("pressure") / 10,
+        data.get("wind_speed") * 10
     ]
 
     fig = go.Figure()
-
     fig.add_trace(go.Scatterpolar(
         r=values,
         theta=categories,
-        fill='toself',
+        fill="toself",
         name="Weather Pattern"
     ))
 
@@ -60,32 +68,29 @@ def weather_radar_chart(data):
 
     st.plotly_chart(fig, use_container_width=True)
 
-
 # -----------------------------
-# 3️⃣ Donut Chart (Humidity Focus)
+# Donut Chart
 # -----------------------------
 def humidity_donut(data):
-    labels = ["Humidity", "Remaining Factors"]
-    values = [data["humidity"], 100 - data["humidity"]]
+    if data.get("humidity") is None:
+        return
 
     fig = go.Figure(data=[go.Pie(
-        labels=labels,
-        values=values,
+        labels=["Humidity", "Remaining"],
+        values=[data.get("humidity"), 100 - data.get("humidity")],
         hole=0.5
     )])
 
-    fig.update_layout(
-        title="💧 Humidity Contribution",
-        title_x=0.5
-    )
-
+    fig.update_layout(title="💧 Humidity Contribution", title_x=0.5)
     st.plotly_chart(fig, use_container_width=True)
+    
 def show_map(data):
+    if data.get("latitude") is None or data.get("longitude") is None:
+        return
+
     df = pd.DataFrame({
-        "lat": [data["latitude"]],
-        "lon": [data["longitude"]],
-        "city": [f'{data["city"]}, {data["country"]}']
+        "lat": [data.get("latitude")],
+        "lon": [data.get("longitude")]
     })
 
-    st.subheader("🌍 City Location on World Map")
     st.map(df)
