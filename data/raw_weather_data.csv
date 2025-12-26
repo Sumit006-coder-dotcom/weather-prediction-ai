@@ -1,0 +1,6 @@
+city,temperature,humidity,pressure,wind_speed,weather,timestamp
+Delhi,19.05,48,1015,1.54,Haze,2025-12-26 17:51:34.608887
+Mumbai,27.99,51,1010,4.12,Smoke,2025-12-26 17:51:36.027475
+Kolkata,19.97,52,1012,2.06,Haze,2025-12-26 17:51:37.421466
+Chennai,26.09,67,1012,4.12,Haze,2025-12-26 17:51:38.530598
+Bangalore,24.1,55,1011,6.26,Clouds,2025-12-26 17:51:39.781376
