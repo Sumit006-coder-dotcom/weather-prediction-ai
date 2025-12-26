@@ -28,7 +28,7 @@ def fetch_weather(city_input):
     "city": data["name"],
     "country": data["sys"]["country"],
     "latitude": data["coord"]["lat"],
-    "longitude": data["coord"][API_KEY = os.getenv("OPENWEATHER_API_KEY")
+    "longitude": data["coord"]["lon"],
     "humidity": data["main"]["humidity"],
     "pressure": data["main"]["pressure"],
     "wind_speed": data["wind"]["speed"],
