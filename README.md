@@ -1,5 +1,5 @@
-1. 🌦 Weather Prediction Using Data Mining and AI
-A web-based Weather Prediction System that uses real-time weather data from the OpenWeather API and applies Machine Learning algorithms to predict weather conditions.
+#### 🌦 Weather Prediction Using Data Mining and AI
+1. A web-based Weather Prediction System that uses real-time weather data from the OpenWeather API and applies Machine Learning algorithms to predict weather conditions.
 The application features interactive visualizations, map-based location display, and is deployed using Streamlit Cloud.
 
 2. Project Overview
