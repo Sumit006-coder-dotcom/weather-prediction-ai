@@ -3,27 +3,28 @@ import plotly.express as px
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
-# -----------------------------
-# 1️⃣ Attractive Bar Chart
-# -----------------------------
-def weather_bar_chart(data):
-    df = pd.DataFrame({
-        "Parameter": ["Temperature (°C)", "Humidity (%)", "Pressure (hPa)", "Wind Speed (m/s)"],
-        "Value": [
-            data["temperature"],
-            data["humidity"],
-            data["pressure"],
-            data["wind_speed"]
-        ]
-    })
+
+# 1️.Bar Chart
+def weather_bar_chart(forecast):
+    if not forecast:
+        st.warning("No forecast data available for chart")
+        return
+
+    df = pd.DataFrame(forecast)
+
+    if "date" not in df.columns or "temp" not in df.columns:
+        st.error(f"Invalid forecast structure: {df.columns.tolist()}")
+        return
 
     fig = px.bar(
         df,
-        x="Parameter",
-        y="Value",
-        text="Value",
-        title="🌦 Weather Parameters Overview",
+        x="date",
+        y="temp",
+        text="temp",
+        title="🌦 Temperature Forecast (Next Days)",
+        labels={"temp": "Temperature (°C)"}
     )
 
     fig.update_traces(textposition="outside")
@@ -32,16 +33,20 @@ def weather_bar_chart(data):
     st.plotly_chart(fig, use_container_width=True)
 
 
-# -----------------------------
-# 2️⃣ Radar (Spider) Chart
-# -----------------------------
-def weather_radar_chart(data):
+# 2️. Radar(Spider) Chart
+def weather_radar_chart(forecast):
+    if not forecast:
+        st.warning("No forecast data available for radar chart")
+        return
+
+    day = forecast[0]
+
     categories = ["Temperature", "Humidity", "Pressure", "Wind Speed"]
     values = [
-        data["temperature"],
-        data["humidity"],
-        data["pressure"] / 10,   # scaled for visibility
-        data["wind_speed"] * 10  # scaled for visibility
+        day.get("temp", 0),
+        day.get("humidity", 0),
+        day.get("pressure", 0) / 10,
+        day.get("wind_speed", 0) * 10
     ]
 
     fig = go.Figure()
@@ -60,14 +65,16 @@ def weather_radar_chart(data):
     )
 
     st.plotly_chart(fig, use_container_width=True)
+    
 
+# 3️. Donut Chart (Humidity Focus)
+def humidity_donut(forecast):
+    day = forecast[0]
 
-# -----------------------------
-# 3️⃣ Donut Chart (Humidity Focus)
-# -----------------------------
-def humidity_donut(data):
-    labels = ["Humidity", "Remaining Factors"]
-    values = [data["humidity"], 100 - data["humidity"]]
+    humidity = day.get("humidity", 0)
+
+    labels = ["Humidity", "Remaining"]
+    values = [humidity, 100 - humidity]
 
     fig = go.Figure(data=[go.Pie(
         labels=labels,
@@ -76,18 +83,25 @@ def humidity_donut(data):
     )])
 
     fig.update_layout(
-        title="💧 Humidity Contribution",
+        title="💧 Humidity Level",
         title_x=0.5
     )
 
     st.plotly_chart(fig, use_container_width=True)
     
-def show_map(data):
+#4. World Map Visualization
+def show_map(forecast):
+    if not forecast:
+        st.warning("📍 Location data not available")
+        return
+
+    lat = forecast[0]["latitude"]
+    lon = forecast[0]["longitude"]
+
     df = pd.DataFrame({
-        "lat": [data["latitude"]],
-        "lon": [data["longitude"]],
-        "city": [f'{data["city"]}, {data["country"]}']
+        "lat": [lat],
+        "lon": [lon]
     })
 
-    st.subheader("🌍 City Location on World Map")
+    
     st.map(df)

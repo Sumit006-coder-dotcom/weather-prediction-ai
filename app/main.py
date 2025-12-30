@@ -1,50 +1,48 @@
 import streamlit as st
-from api_fetch import fetch_weather
+from api_fetch import fetch_5day_forecast
 from prediction import predict_weather
-from visualization import weather_bar_chart, weather_radar_chart,humidity_donut,show_map
+from visualization import weather_bar_chart, weather_radar_chart, humidity_donut, show_map
 
-st.set_page_config(page_title="Weather Prediction App", layout="centered")
+# Weather emoji mapping
+weather_emoji = {
+    "Clear": "☀",
+    "Clouds": "☁",
+    "Rain": "🌧",
+    "Snow": "❄",
+    "Thunderstorm": "⛈",
+    "Drizzle": "🌦",
+    "Mist": "🌫",
+    "Fog": "🌫"
+}
 
-st.markdown(
-    "<h1 style='text-align:center;'>🌍 AI Weather Prediction System</h1>",
-    unsafe_allow_html=True
+
+
+st.title("🌍 Weather Forecast App")
+
+city = st.text_input("Enter City Name")
+forecast = fetch_5day_forecast(city)
+
+if forecast is None:
+    st.error("City not found or API error")
+    
+elif isinstance(forecast, str):
+    st.error(f"⚠ Network Error: {forecast}")
+else:
+    st.success("Forecast Generated ✅")
+
+    for day in forecast:
+        emoji = weather_emoji.get(day["weather"], "🌤")
+        st.write(
+    f"📅 {day['date']} → {emoji} {day['weather']} | 🌡 {day['temp']}°C"
 )
+    weather_bar_chart(forecast)
 
-st.markdown(
-    "<p style='text-align:center;'>Enter any city in the world "
-    "(e.g., Delhi,IN | London,UK | New York,US)</p>",
-    unsafe_allow_html=True
-)
+    st.subheader("🌀 Weather Distribution")
+    weather_radar_chart(forecast)
 
-city = st.text_input("🌐 City Name", placeholder="City or City,CountryCode")
+    st.subheader("💧 Humidity Overview")
+    humidity_donut(forecast)
 
-if st.button("🔍 Predict Weather"):
-    data = fetch_weather(city)
+    st.subheader("🗺 Location Map")
+    show_map(forecast)
 
-    if data["error"]:
-        st.error(data["message"])
-    else:
-        prediction = predict_weather(data)
-
-        # Weather Card
-        st.markdown(
-            f"""
-            <div style="padding:15px;border-radius:10px;
-                        background:#f0f2f6;">
-            <h3>{data['city']}, {data['country']}</h3>
-            🌡 Temperature: {data['temperature']} °C <br>
-            💧 Humidity: {data['humidity']} % <br>
-            🌬 Wind Speed: {data['wind_speed']} m/s <br>
-            📊 Pressure: {data['pressure']} hPa
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        st.success(f"🤖 Predicted Weather: *{prediction}*")
-
-        # Graphs
-        weather_bar_chart(data)
-        weather_radar_chart(data)
-        humidity_donut(data)
-        show_map(data)

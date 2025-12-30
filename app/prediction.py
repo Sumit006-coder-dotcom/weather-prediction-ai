@@ -9,7 +9,7 @@ scaler = joblib.load(os.path.join(BASE_DIR, "models", "scaler.pkl"))
 le = joblib.load(os.path.join(BASE_DIR, "models", "label_encoder.pkl"))
 
 def predict_weather(data):
-    # Safety check
+
     required_keys = ["temperature", "humidity", "pressure", "wind_speed"]
     for key in required_keys:
         if key not in data:
