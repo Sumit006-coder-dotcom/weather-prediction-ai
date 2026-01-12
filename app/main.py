@@ -15,8 +15,6 @@ weather_emoji = {
     "Fog": "🌫"
 }
 
-
-
 st.title("🌍 Weather Forecast App")
 
 city = st.text_input("Enter City Name")
@@ -28,7 +26,7 @@ if forecast is None:
 elif isinstance(forecast, str):
     st.error(f"⚠ Network Error: {forecast}")
 else:
-    st.success("Forecast Generated ✅")
+    st.success("Forecast Generated Successfully")
 
     for day in forecast:
         emoji = weather_emoji.get(day["weather"], "🌤")
