@@ -1,65 +1,160 @@
-# 🌦 Weather Prediction Using Data Mining and AI
+## 🌦 Weather Prediction System using Machine Learning & Data Mining
 
-A web-based **Weather Prediction System** that uses **real-time weather data** from the **OpenWeather API** and applies **Machine Learning algorithms** to predict weather conditions such as **Sunny, Cloudy, Rainy, and Snowy**. The application includes **interactive visualizations**, **map-based city location display**, and is deployed on **Streamlit Cloud**.
+A complete end-to-end **Weather Prediction System** that collects **real-time weather data** using the **OpenWeather API**, performs **preprocessing**, applies multiple **Machine Learning models**, evaluates performance, and visualizes insights.
+The system also includes clustering analysis for discovering weather patterns.
 
-This project fetches live weather data, performs preprocessing and feature scaling, and passes the data to trained ML models to generate accurate predictions. The results are displayed through a clean and user-friendly web interface with charts and a world map.
+## Project Highlights
+- Real-time weather data collection
+- Data preprocessing and feature scaling
+- Multiple ML models comparison
+- Clustering analysis using K-Means
+- Model evaluation with multiple metrics
+- Interactive visualizations
+- Modular notebook pipeline
+- Ready for deployment and research
 
-The system uses multiple machine learning algorithms including **Logistic Regression**, **Decision Tree Classifier**, and **Random Forest Classifier**, where **Random Forest** achieved the best performance and is used for deployment.
+## Objectives
+- Collect live weather data from OpenWeather API
+- Clean and preprocess the dataset
+- Train multiple ML models
+- Evaluate accuracy, precision, recall, F1-score
+- Perform clustering analysis
+- Visualize model performance and insights
+- Save trained models for reuse
 
-### 🎯 Key Objectives
-- Collect real-time weather data using OpenWeather API  
-- Perform data preprocessing and feature scaling  
-- Train, compare, and evaluate ML models  
-- Select the best-performing model  
-- Visualize weather parameters using interactive charts  
-- Display city location using latitude & longitude on a world map  
-- Deploy the application using Streamlit Cloud  
+## Machine Learning Models Used
+- Model
+- Purpose
+- Logistic Regression
+- Baseline classifier
+- Decision Tree Classifier
+- Non-linear modeling
+- Random Forest Classifier
+- Ensemble model (Best Accuracy)
+- K-Means Clustering
+- Pattern discovery
 
-### 🧰 Tech Stack
-**Python**, Pandas, NumPy, Scikit-learn, Plotly, Matplotlib, Streamlit, OpenWeather API, Joblib, Git & GitHub
+## Evaluation Metrics
+The following metrics are used for evaluation:
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Confusion Matrix
+- Classification Report
+- MAE
+- RMSE
+- Model Comparison Graph
 
-### 📁 Project Structure
-    '''bash
-    Weather/
-    ├── app/ (main.py, api_fetch.py, prediction.py, visualization.py)
-    ├── data/ (raw_weather_data.csv, processed_weather_data.csv)
-    ├── models/ (trained ML models, scaler, label encoder)
-    ├── notebooks/ (preprocessing, training, evaluation)
-    ├── requirements.txt
-    └── README.md
+## Tech Stack
+- Language: Python
+- Data Handling: Pandas, NumPy
+- Machine Learning: Scikit-learn
+- Visualization: Matplotlib, Seaborn
+- API: OpenWeather API
+- Model Persistence: Joblib
+- Environment: Jupyter Notebook, VS Code
+- Version Control: Git & GitHub
 
+# Project Structure
 
-### ✨ Features
-- 🌍 Works for cities worldwide (City or City, CountryCode)
-- Real-time weather data fetching
-- AI-based weather prediction
-- Interactive charts (Bar, Radar, Donut)
-- 🗺 World map visualization using latitude & longitude
-- Fully web-based and cloud deployed
+WEATHER/
+│
+├── data/
+│   ├── raw_weather_data.csv
+│   ├── processed_weather_data.csv
+│   └── weather_clustered.csv
+│
+├── models/
+│   ├── logistic_model.pkl
+│   ├── decision_tree_model.pkl
+│   ├── random_forest_model.pkl
+│   ├── scaler.pkl
+│   └── label_encoder.pkl
+│
+├── notebooks/
+│   ├── 1_data_collection.ipynb
+│   ├── 2_preprocessing.ipynb
+│   ├── 3_model_training.ipynb
+│   ├── 4_Clustering.ipynb
+│   └── 5_evaluation.ipynb
+│
+├── venv/
+├── .gitignore
+├── LICENSE.md
+├── README.md
+└── requirements.txt
 
-### ▶ How to Run Locally
-    ```bash
-    git clone https://github.com/your-username/weather-prediction-ai.git
-    cd weather-prediction-ai
-    python -m venv venv
-    venv\Scripts\activate
-    pip install -r requirements.txt
-    set OPENWEATHER_API_KEY=your_api_key_here
-    streamlit run app/main.py
+## Workflow Pipeline
+- Data Collection
+- Fetch live weather data using OpenWeather API
+- Save into raw_weather_data.csv
+- Preprocessing
+- Handle missing values
+- Feature scaling
+- Label encoding
+- Save into processed_weather_data.csv
+- Model Training
+- Train Logistic Regression
+- Train Decision Tree
+- Train Random Forest
+- Save trained models
+- Clustering
+- Apply K-Means clustering
+- Save clustered data
+- Evaluation
+- Generate metrics
+- Plot accuracy comparison
+- Confusion matrix and classification report
 
-### 🚀 Deployment
+## How to Run the Project
+- Step 1: Clone Repository:
+Bash
+git clone https://github.com/your-username/weather-prediction.git
+cd weather-prediction
+- Step 2: Create Virtual Environment:
+Bash
+python -m venv venv
+venv\Scripts\activate
+- Step 3: Install Dependencies:
+Bash
+pip install -r requirements.txt
+- Step 4: Run Notebooks in Sequence
 
-The application is deployed using Streamlit Cloud, and the OpenWeather API key is securely managed using Streamlit Secrets.
+**Open Jupyter Notebook or VS Code and execute**:
+- 1️. 1_data_collection.ipynb
+- 2️. 2_preprocessing.ipynb
+- 3️. 3_model_training.ipynb
+- 4️. 4_Clustering.ipynb
+- 5️. 5_evaluation.ipynb
 
-### 📈 Results
+## Sample Results
+- Model
+- Accuracy
+- Logistic Regression
+- ~0.57
+- Decision Tree
+- ~0.72
+- Random Forest
+- ~0.81
 
-- Random Forest achieved the highest accuracy
-- Interactive visualizations improved data interpretation
-- Accurate weather predictions using live data
+**Random Forest achieved the highest accuracy.**
 
-## 👨‍💻 Author
+## Future Enhancements
+- Integrate deep learning (LSTM) for time-series forecasting
+- Deploy using Streamlit or Flask
+- Add real-time dashboard
+- Expand dataset with historical records
+- Improve clustering visualization
+- Mobile-friendly UI
 
-**Sumit Kumar Karn**
+## Author
+Sumit Kumar Karn
 BCA (Hons. with Research)
-Passionate about AI, ML & Data Science
+Passionate about AI, Machine Learning & Data Science
 
+## Acknowledgements
+OpenWeather API
+Scikit-learn Community
+Pandas & NumPy
+Matplotlib
